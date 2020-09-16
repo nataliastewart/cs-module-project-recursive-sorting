@@ -18,8 +18,8 @@ def merge(arrA, arrB):
             merged_arr[merged_arr_index] = arrA[arrA_index]
             merged_arr_index += 1
             arrA_index += 1
-        #check if arrA is empty, if it is dump values of arrB into sortes array
-    if arrA_index == len(arrA):
+        #check if arrA is empty, if it is dump values of arrB into sortes array ??????????
+    if arrA_index == len(arrA): #<<<< ???????????????? how it is checking the empty?
         for item in arrB[arrB_index:]:
             merged_arr[merged_arr_index] = arrB[arrB_index]
             merged_arr_index +=1
@@ -38,10 +38,44 @@ print(merge([3,4], [1,5]))
 # TO-DO: implement the Merge Sort function below recursively
 def merge_sort(arr):
     # Your code here
-    #base case : in the len array <= 1
-    if len(arr) <= 1:
-        return arr
+    # Recursively split the array in half until len(all arrays) == 1
+    if len(arr) > 1:
+        # define midpoint
+        m = len(arr) // 2
+        # define left half
+        l = arr[:m]
+        # define right half
+        r = arr[m:]
 
+        # Recurse left half
+        l = merge_sort(l)
+        # Recurse right half
+        r = merge_sort(r)
+
+        # Setup pointers for merge
+        i = 0  # Traverses left arr
+        j = 0  # Traverses right arr
+        k = 0  # Traverses arr for inserting values into sorted location
+        # Iterate through l and r simultaneously,
+        # find smallest value between current index in l and r
+        # and insert it at arr[k], inc k as you go
+        while i < len(l) and j < len(r):
+            if l[i] < r[j]:
+                arr[k] = l[i]
+                i += 1
+            else:
+                arr[k] = r[j]
+                j += 1
+            k += 1
+        # Cleanup left over elements from uneven arr's
+        while i < len(l):
+            arr[k] = l[i]
+            i += 1
+            k += 1
+        while j < len(r):
+            arr[k] = r[j]
+            j += 1
+            k += 1
 
     return arr
 
